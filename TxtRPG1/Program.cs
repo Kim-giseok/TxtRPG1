@@ -10,11 +10,17 @@ namespace TxtRPG1
         static void Main(string[] args)
         {
             //게임 시작 준비
-            string jsonString;
-
             Character player;
             Item[] items;
-            player = new Character(Console.ReadLine());
+            string name;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("스파르타 던전에 오신 것을 환영합니다.");
+                Console.WriteLine("당신의 이름을 입력해 주세요");
+                Console.WriteLine();
+            } while ((name = Console.ReadLine()) == "");
+            player = new Character(name);
 
             items =
             [
