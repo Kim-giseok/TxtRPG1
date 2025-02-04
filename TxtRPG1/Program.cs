@@ -5,6 +5,9 @@
         static void Main(string[] args)
         {
             Character player = new Character("chad");
+            Item ironArmor = new Item("무쇠갑옷", Item.Type.armor, 5, "무쇠로 만들어져 튼튼한 갑옷입니다.");
+            Item spartaSpear = new Item("스파르타의 창", Item.Type.weapon, 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.");
+            Item oldSword = new Item("낡은 검", Item.Type.weapon, 2, "쉽게 볼 수 있는 낡은 검 입니다.");
 
             byte choice;
         START:
@@ -23,6 +26,10 @@
                     player.Inventory(out choice);
                     break;
                 case 3:
+                    player.GetItem(ironArmor);
+                    player.GetItem(spartaSpear);
+                    player.GetItem(oldSword);
+                    choice = 0;
                     break;
             }
             if (choice == 0)

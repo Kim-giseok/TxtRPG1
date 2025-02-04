@@ -10,27 +10,27 @@ namespace TxtRPG1
     {
         string name;
         public enum Type { armor, weapon };
-        Type type;
-        int stat;
+        public Type ItemType { get; private set; }
+        public int Stat { get; }
         string descript;
 
         public Item(string name, Type type, int stat, string descript)
         {
             this.name = name;
-            this.type = type;
-            this.stat = stat;
+            this.ItemType = type;
+            this.Stat = stat;
             this.descript = descript;
         }
 
         public override string ToString()
-        { 
+        {
             StringBuilder sb = new StringBuilder();
             sb.Append($"{name}\t| ");
-            if(type == Type.armor)
+            if (ItemType == Type.armor)
             { sb.Append("방어력"); }
-            else if(type == Type.weapon)
+            else if (ItemType == Type.weapon)
             { sb.Append("공격력"); }
-            sb.Append($" +{stat} | {descript}");
+            sb.Append($" +{Stat} | {descript}");
 
             return sb.ToString();
         }
