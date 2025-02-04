@@ -116,7 +116,7 @@ namespace TxtRPG1
                     case 1:
                         if (Player.Gold >= price)
                         {
-                            if (Player.Hp <= 100)
+                            if (Player.Hp < 100)
                             {
                                 Player.Rest(price);
                                 Console.WriteLine("휴식을 완료했습니다.");
