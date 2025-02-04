@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace TxtRPG1
 {
+    [Serializable]
     internal class Character
     {
         public int Level { get; private set; }
-        public string Name { get; private set; }
+        public string Name { get; }
         public enum Class { 전사, 궁수, 마법사 };
-        public Class job { get; private set; }
-        public int Atk { get; private set; }
+        public Class job { get; }
+        public float Atk { get; private set; }
         public int Def { get; private set; }
         public int Hp { get; private set; }
         public int Gold { get; private set; }
+        public int Exp { get; private set; }
 
-        List<Item> items = new List<Item>();
-        int weapon = (int)Item.Type.weapon, armor = (int)Item.Type.armor;
-        int?[] equips = { null, null }; //장착한 아이템을 보여주는 변수(armor, weapon)
+        public List<Item> Items { get; private set; }
+        public int weapon { get; }
+        public int armor { get; }
+        public int?[] equips { get; private set; } //장착한 아이템을 보여주는 변수(armor, weapon)
 
         public Character(string name)
         {
@@ -30,6 +33,11 @@ namespace TxtRPG1
             Def = 5;
             Hp = 100;
             Gold = 1500;
+            Exp = 0;
+            Items = new List<Item>();
+            weapon = (int)Item.Type.weapon;
+            armor = (int)Item.Type.armor;
+            equips = [null, null];
         }
 
         public void ShowStat(out byte choice)
@@ -45,13 +53,13 @@ namespace TxtRPG1
 
                 Console.Write($"공격력 : {Atk}");
                 if (equips[weapon] != null)
-                { Console.WriteLine($" (+{items[(int)equips[weapon]].Stat})"); }
+                { Console.WriteLine($" (+{Items[(int)equips[weapon]].Stat})"); }
                 else
                 { Console.WriteLine(); }
 
                 Console.Write($"방어력 : {Def}");
                 if (equips[armor] != null)
-                { Console.WriteLine($" (+{items[(int)equips[armor]].Stat})"); }
+                { Console.WriteLine($" (+{Items[(int)equips[armor]].Stat})"); }
                 else
                 { Console.WriteLine(); }
 
@@ -78,15 +86,15 @@ namespace TxtRPG1
             }
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
-            foreach (Item item in items)
+            foreach (Item item in Items)
             {
                 Console.Write("- ");
                 //장착 관리/판매 시 선택번호 표시
                 if (mode == Mode.Equip || mode == Mode.Sell)
-                { Console.Write($"{items.IndexOf(item) + 1} "); }
+                { Console.Write($"{Items.IndexOf(item) + 1} "); }
                 //장착여부 표시
                 if ((equips[(int)item.ItemType] != null &&
-                    items[(int)equips[(int)item.ItemType]] == item))
+                    Items[(int)equips[(int)item.ItemType]] == item))
                 { Console.Write("[E]"); }
 
                 Console.Write(item);
@@ -137,23 +145,23 @@ namespace TxtRPG1
                 { break; }
                 try
                 {
-                    int type = items[choice - 1].ItemType == Item.Type.armor ? 0 : 1;
+                    int type = Items[choice - 1].ItemType == Item.Type.armor ? 0 : 1;
                     //장착해제
                     if (equips[type] != null)
                     {
                         if (type == 0)
-                        { Def -= items[(int)equips[type]].Stat; }
+                        { Def -= Items[(int)equips[type]].Stat; }
                         else
-                        { Atk -= items[(int)equips[type]].Stat; }
+                        { Atk -= Items[(int)equips[type]].Stat; }
 
                         if (equips[type] == choice - 1)
                         { equips[type] = null; break; }
                     }
                     //장착
                     if (type == 0)
-                    { Def += items[choice - 1].Stat; }
+                    { Def += Items[choice - 1].Stat; }
                     else
-                    { Atk += items[choice - 1].Stat; }
+                    { Atk += Items[choice - 1].Stat; }
                     equips[type] = choice - 1;
                 }
                 catch (ArgumentOutOfRangeException ex)
@@ -164,22 +172,40 @@ namespace TxtRPG1
         public void BuyItem(Item item)
         {
             Gold -= item.Price;
-            items.Add(item);
+            Items.Add(item);
         }
 
         public void SellItem(int idx)
         {
-            if (equips[(int)items[idx].ItemType] == idx)//장착 해제
+            if (equips[(int)Items[idx].ItemType] == idx)//장착 해제
             {
-                if (items[idx].ItemType == Item.Type.armor)
-                { Def -= items[idx].Stat; }
+                if (Items[idx].ItemType == Item.Type.armor)
+                { Def -= Items[idx].Stat; }
                 else
-                { Atk -= items[idx].Stat; }
-                equips[(int)items[idx].ItemType] = null;
+                { Atk -= Items[idx].Stat; }
+                equips[(int)Items[idx].ItemType] = null;
             }
-            Gold += items[idx].Price * 85 / 100;
-            items[idx].Bought = false;
-            items.RemoveAt(idx);
+            Gold += Items[idx].Price * 85 / 100;
+            Items[idx].Bought = false;
+            Items.RemoveAt(idx);
+        }
+
+        public void GetDamage(int damage)
+        { Hp -= damage <= Hp ? damage : Hp; }
+
+        public void Reward(int reward)
+        {
+            Gold += reward;
+            Gold += reward * new Random().Next((int)Atk*10, (int)Atk*20) / 1000;
+
+            Exp++;
+            if (Exp == Level)
+            {
+                Level++;
+                Atk += 0.5f;
+                Def++;
+                Exp = 0;
+            }
         }
 
         public void Rest(int price)

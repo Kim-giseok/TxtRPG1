@@ -10,9 +10,9 @@ namespace TxtRPG1
     {
         public string Name { get; }
         public enum Type { armor, weapon };
-        public Type ItemType { get; private set; }
-        public int Stat { get; }
-        public string Descript { get; }
+        public Type ItemType { get; }
+        public int Stat { get;}
+        public string Descript { get;}
         public int Price { get; }
         public bool Bought { get; set; }
 
