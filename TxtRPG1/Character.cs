@@ -73,7 +73,6 @@ namespace TxtRPG1
                 { break; }
                 Program.WrongSelectDisplay();
             } while (true);
-
         }
 
         public enum Mode { Inventory, Equip, Sell };
@@ -139,7 +138,6 @@ namespace TxtRPG1
                 Console.WriteLine("인벤토리 - 장착관리");
                 ShowItems(Mode.Equip);
                 Console.WriteLine("0. 나가기");
-
 
                 if (Program.Choice(out choice) && choice == 0)
                 { break; }

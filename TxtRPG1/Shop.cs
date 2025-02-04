@@ -60,7 +60,6 @@ namespace TxtRPG1
                 Console.WriteLine("2. 아이템 판매");
                 Console.WriteLine("0. 나가기");
 
-
                 if (Program.Choice(out choice) && choice == 0)
                 { break; }
                 switch (choice)
