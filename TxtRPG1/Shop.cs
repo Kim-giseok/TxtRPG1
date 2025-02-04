@@ -24,11 +24,11 @@ namespace TxtRPG1
             Console.WriteLine();
             Console.WriteLine("[보유 골드]");
             Console.WriteLine($"{Player.Gold} G");
-
+            Console.WriteLine();
+            //판매일 경우 플래이어가 소유중인 아이템을 보여줍니다.
             if (mode == Mode.Sell)
             { Player.ShowItems(Character.Mode.Sell); return; }
 
-            Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
             for (int i = 0; i < Items.Length; i++)
@@ -39,6 +39,7 @@ namespace TxtRPG1
                 { Console.Write($"{i + 1} "); }
 
                 Console.Write($"{Items[i]}\t| ");
+                //가격 및 판매여부 표시
                 if (Items[i].Bought)
                 { Console.WriteLine("구매완료"); }
                 else
@@ -68,7 +69,7 @@ namespace TxtRPG1
                         BuyItem(out choice);
                         break;
                     case 2:
-                        //SellItem(out choice);
+                        SellItem(out choice);
                         break;
                     default:
                         Program.WrongSelectDisplay();
@@ -96,12 +97,34 @@ namespace TxtRPG1
                     { Console.WriteLine("이미 구매한 아이템입니다."); }
                     else if (Items[choice - 1].Price <= Player.Gold) //금액이 충분한 경우
                     {
-                        Player.GetItem(Items[choice - 1]);
+                        Player.BuyItem(Items[choice - 1]);
                         Items[choice - 1].Bought = true;
                         Console.WriteLine("구매를 완료했습니다.");
                     }
                     else //금액이 부족한 경우
                     { Console.WriteLine("Gold 가 부족합니다."); }
+                    Thread.Sleep(500);
+                }
+                catch (IndexOutOfRangeException ex)
+                { Program.WrongSelectDisplay(); }
+            } while (true);
+        }
+
+        public void SellItem(out byte choice)
+        {
+            do
+            {
+                Console.Clear();
+
+                Console.WriteLine("상점 - 아이템 판매");
+                //보유골드와 자신의 아이템들을 보여줍니다.
+                ShowItems(Mode.Sell);
+                Console.WriteLine("0. 나가기");
+                if (Program.Choice(out choice) && choice == 0)
+                { break; }
+                try
+                {
+                    Player.SellItem(choice - 1);
                     Thread.Sleep(500);
                 }
                 catch (ArgumentOutOfRangeException ex)

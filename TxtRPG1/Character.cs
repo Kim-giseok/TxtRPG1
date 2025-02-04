@@ -81,15 +81,20 @@ namespace TxtRPG1
             foreach (Item item in items)
             {
                 Console.Write("- ");
-                //장착 관리 시 선택번호 표시
-                if (mode == Mode.Equip)
+                //장착 관리/판매 시 선택번호 표시
+                if (mode == Mode.Equip || mode == Mode.Sell)
                 { Console.Write($"{items.IndexOf(item) + 1} "); }
                 //장착여부 표시
                 if ((equips[(int)item.ItemType] != null &&
                     items[(int)equips[(int)item.ItemType]] == item))
                 { Console.Write("[E]"); }
 
-                Console.WriteLine(item);
+                Console.Write(item);
+                //판매시 판매가 표시
+                if (mode == Mode.Sell)
+                { Console.WriteLine($"\t| {item.Price * 85 / 100} G"); }
+                else
+                { Console.WriteLine(); }
             }
             Console.WriteLine();
         }
@@ -156,10 +161,31 @@ namespace TxtRPG1
             } while (choice != 0);
         }
 
-        public void GetItem(Item item)
+        public void BuyItem(Item item)
         {
             Gold -= item.Price;
             items.Add(item);
+        }
+
+        public void SellItem(int idx)
+        {
+            if (equips[(int)items[idx].ItemType] == idx)//장착 해제
+            {
+                if (items[idx].ItemType == Item.Type.armor)
+                { Def -= items[idx].Stat; }
+                else
+                { Atk -= items[idx].Stat; }
+                equips[(int)items[idx].ItemType] = null;
+            }
+            Gold += items[idx].Price * 85 / 100;
+            items[idx].Bought = false;
+            items.RemoveAt(idx);
+        }
+
+        public void Rest(int price)
+        {
+            Gold -= price;
+            Hp = 100;
         }
     }
 }

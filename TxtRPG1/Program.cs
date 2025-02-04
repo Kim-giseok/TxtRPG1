@@ -4,6 +4,7 @@
     {
         static void Main(string[] args)
         {
+            //게임 시작 준비
             Character player = new Character("chad");
             Item[] items = {
                 new Item("수련자　갑옷", Item.Type.armor, 5, "수련에　도움을　주는　갑옷입니다.", 1000),
@@ -15,42 +16,11 @@
             };
             Shop shop = new Shop(player, items);
 
+            GameManager game = new GameManager(player, shop);
             //게임 시작
-            byte choice;
-            do
-            {
-                StartScene(out choice);
-                
-                switch (choice)
-                {
-                    case 1:
-                        player.ShowStat(out choice);
-                        break;
-                    case 2:
-                        player.Inventory(out choice);
-                        break;
-                    case 3:
-                        shop.ShopEnter(out choice);
-                        break;
-                    default:
-                        WrongSelectDisplay();
-                        break;
-                }
-            } while (true);
+            game.StartScene();
         }
 
-        public static void StartScene(out byte choice)
-        {
-            Console.Clear();
-            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
-            Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
-            Console.WriteLine();
-            Console.WriteLine("1. 상태 보기");
-            Console.WriteLine("2. 인벤토리");
-            Console.WriteLine("3. 상점");
-
-            Choice(out choice);
-        }
         public static bool Choice(out byte choice)
         {
             Console.WriteLine();
