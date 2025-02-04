@@ -32,8 +32,7 @@
                         shop.ShopEnter(out choice);
                         break;
                     default:
-                        Console.WriteLine("잘못된 입력입니다");
-                        Console.ReadKey();
+                        WrongSelectDisplay();
                         break;
                 }
             } while (true);
@@ -56,6 +55,12 @@
             Console.WriteLine();
             Console.Write("원하시는 행동을 입력해주세요.\n>> ");
             return byte.TryParse(Console.ReadLine(), out choice);
+        }
+
+        public static void WrongSelectDisplay()
+        {
+            Console.WriteLine("잘못된 입력입니다");
+            Thread.Sleep(500);
         }
     }
 }

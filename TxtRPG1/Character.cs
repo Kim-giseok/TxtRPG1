@@ -32,34 +32,40 @@ namespace TxtRPG1
             Gold = 1500;
         }
 
-        public bool ShowStat(out byte choice)
+        public void ShowStat(out byte choice)
         {
-            Console.Clear();
-            Console.WriteLine("상태 보기");
-            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
-            Console.WriteLine();
-            Console.WriteLine($"Lv. {Level:D2}");
-            Console.WriteLine($"{Name} ({job})");
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("상태 보기");
+                Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+                Console.WriteLine();
+                Console.WriteLine($"Lv. {Level:D2}");
+                Console.WriteLine($"{Name} ({job})");
 
-            Console.Write($"공격력 : {Atk}");
-            if (equips[weapon] != null)
-            { Console.WriteLine($" (+{items[(int)equips[weapon]].Stat})"); }
-            else
-            { Console.WriteLine(); }
+                Console.Write($"공격력 : {Atk}");
+                if (equips[weapon] != null)
+                { Console.WriteLine($" (+{items[(int)equips[weapon]].Stat})"); }
+                else
+                { Console.WriteLine(); }
 
-            Console.Write($"방어력 : {Def}");
-            if (equips[armor] != null)
-            { Console.WriteLine($" (+{items[(int)equips[armor]].Stat})"); }
-            else
-            { Console.WriteLine(); }
+                Console.Write($"방어력 : {Def}");
+                if (equips[armor] != null)
+                { Console.WriteLine($" (+{items[(int)equips[armor]].Stat})"); }
+                else
+                { Console.WriteLine(); }
 
 
-            Console.WriteLine($"체력 : {Hp}");
-            Console.WriteLine($"Gold : {Gold} G");
-            Console.WriteLine();
-            Console.WriteLine("0. 나가기");
+                Console.WriteLine($"체력 : {Hp}");
+                Console.WriteLine($"Gold : {Gold} G");
+                Console.WriteLine();
+                Console.WriteLine("0. 나가기");
 
-            return Program.Choice(out choice);
+                if(Program.Choice(out choice)&&choice == 0)
+                { break; }
+                Program.WrongSelectDisplay();
+            } while (true);
+
         }
 
         public enum Mode { Inventory, Equip, Sell };
@@ -88,7 +94,7 @@ namespace TxtRPG1
             Console.WriteLine();
         }
 
-        public bool Inventory(out byte choice)
+        public void Inventory(out byte choice)
         {
             do
             {
@@ -106,16 +112,13 @@ namespace TxtRPG1
                         Equip(out choice);
                         break;
                     default:
-                        Console.WriteLine("잘못된 입력입니다");
-                        Console.ReadKey();
+                        Program.WrongSelectDisplay();
                         break;
                 }
             } while (true);
-
-            return true;
         }
 
-        public bool Equip(out byte choice)
+        public void Equip(out byte choice)
         {
             do
             {
@@ -127,7 +130,7 @@ namespace TxtRPG1
 
                 if (Program.Choice(out choice) && choice == 0)
                 { break; }
-                if (choice <= items.Count)
+                if (0 < choice && choice <= items.Count)
                 {
                     int type = items[choice - 1].ItemType == Item.Type.armor ? 0 : 1;
                     //장착해제
@@ -149,12 +152,8 @@ namespace TxtRPG1
                     equips[type] = choice - 1;
                 }
                 else
-                {
-                    Console.WriteLine("잘못된 입력입니다");
-                    Console.ReadKey();
-                }
+                { Program.WrongSelectDisplay(); }
             } while (choice != 0);
-            return true;
         }
 
         public void GetItem(Item item)

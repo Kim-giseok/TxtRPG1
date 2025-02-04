@@ -47,7 +47,7 @@ namespace TxtRPG1
             Console.WriteLine();
         }
 
-        public bool ShopEnter(out byte choice)
+        public void ShopEnter(out byte choice)
         {
             do
             {
@@ -71,15 +71,13 @@ namespace TxtRPG1
                         //SellItem(out choice);
                         break;
                     default:
-                        Console.WriteLine("잘못된 입력입니다");
-                        Console.ReadKey();
+                        Program.WrongSelectDisplay();
                         break;
                 }
             } while (true);
-            return true;
         }
 
-        public bool BuyItem(out byte choice)
+        public void BuyItem(out byte choice)
         {
             do
             {
@@ -89,12 +87,15 @@ namespace TxtRPG1
                 ShowItems(Mode.Buy);
                 Console.WriteLine("0. 나가기");
 
-                Program.Choice(out choice);
-                if (choice == 0)
+                if (Program.Choice(out choice) && choice == 0)
                 { break; }
-                //고른 아이템을 구매합니다.
+                if (0 < choice && choice <= Items.Length)
+                { 
+                    //고른 아이템을 구매합니다.
+                }
+                else
+                { Program.WrongSelectDisplay(); }
             } while (true);
-            return true;
         }
     }
 }
