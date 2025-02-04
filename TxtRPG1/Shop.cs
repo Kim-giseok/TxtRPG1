@@ -36,7 +36,7 @@ namespace TxtRPG1
                 Console.Write("- ");
                 //구매 시 선택번호 표시
                 if (mode == Mode.Buy)
-                { Console.Write($"{i} "); }
+                { Console.Write($"{i + 1} "); }
 
                 Console.Write($"{Items[i]}\t| ");
                 if (Items[i].Bought)
@@ -89,11 +89,22 @@ namespace TxtRPG1
 
                 if (Program.Choice(out choice) && choice == 0)
                 { break; }
-                if (0 < choice && choice <= Items.Length)
-                { 
+                try
+                {
                     //고른 아이템을 구매합니다.
+                    if (Items[choice - 1].Bought) //이미 구매했을 경우
+                    { Console.WriteLine("이미 구매한 아이템입니다."); }
+                    else if (Items[choice - 1].Price <= Player.Gold) //금액이 충분한 경우
+                    {
+                        Player.GetItem(Items[choice - 1]);
+                        Items[choice - 1].Bought = true;
+                        Console.WriteLine("구매를 완료했습니다.");
+                    }
+                    else //금액이 부족한 경우
+                    { Console.WriteLine("Gold 가 부족합니다."); }
+                    Thread.Sleep(500);
                 }
-                else
+                catch (ArgumentOutOfRangeException ex)
                 { Program.WrongSelectDisplay(); }
             } while (true);
         }

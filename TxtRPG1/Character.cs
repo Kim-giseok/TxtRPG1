@@ -61,7 +61,7 @@ namespace TxtRPG1
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
 
-                if(Program.Choice(out choice)&&choice == 0)
+                if (Program.Choice(out choice) && choice == 0)
                 { break; }
                 Program.WrongSelectDisplay();
             } while (true);
@@ -130,7 +130,7 @@ namespace TxtRPG1
 
                 if (Program.Choice(out choice) && choice == 0)
                 { break; }
-                if (0 < choice && choice <= items.Count)
+                try
                 {
                     int type = items[choice - 1].ItemType == Item.Type.armor ? 0 : 1;
                     //장착해제
@@ -151,13 +151,14 @@ namespace TxtRPG1
                     { Atk += items[choice - 1].Stat; }
                     equips[type] = choice - 1;
                 }
-                else
+                catch (ArgumentOutOfRangeException ex)
                 { Program.WrongSelectDisplay(); }
             } while (choice != 0);
         }
 
         public void GetItem(Item item)
         {
+            Gold -= item.Price;
             items.Add(item);
         }
     }

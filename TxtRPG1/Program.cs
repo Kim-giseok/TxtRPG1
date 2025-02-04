@@ -20,6 +20,7 @@
             do
             {
                 StartScene(out choice);
+                
                 switch (choice)
                 {
                     case 1:
@@ -38,7 +39,7 @@
             } while (true);
         }
 
-        public static bool StartScene(out byte choice)
+        public static void StartScene(out byte choice)
         {
             Console.Clear();
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
@@ -48,7 +49,7 @@
             Console.WriteLine("2. 인벤토리");
             Console.WriteLine("3. 상점");
 
-            return Choice(out choice);
+            Choice(out choice);
         }
         public static bool Choice(out byte choice)
         {
