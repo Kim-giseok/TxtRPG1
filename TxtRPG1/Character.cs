@@ -62,24 +62,28 @@ namespace TxtRPG1
             return Program.Choice(out choice);
         }
 
-        public void ShowItems(bool equip = false)
+        public enum Mode { Inventory, Equip, Sell };
+        public void ShowItems(Mode mode)
         {
-            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
-            Console.WriteLine();
+            if (mode != Mode.Sell)
+            {
+                Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+                Console.WriteLine();
+            }
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
             foreach (Item item in items)
             {
                 Console.Write("- ");
                 //장착 관리 시 선택번호 표시
-                if (equip)
+                if (mode == Mode.Equip)
                 { Console.Write($"{items.IndexOf(item) + 1} "); }
                 //장착여부 표시
                 if ((equips[(int)item.ItemType] != null &&
                     items[(int)equips[(int)item.ItemType]] == item))
                 { Console.Write("[E]"); }
 
-                Console.WriteLine($"{item}");
+                Console.WriteLine(item);
             }
             Console.WriteLine();
         }
@@ -90,18 +94,21 @@ namespace TxtRPG1
             {
                 Console.Clear();
                 Console.WriteLine("인벤토리");
-                ShowItems();
+                ShowItems(Mode.Inventory);
                 Console.WriteLine("1. 장착 관리");
                 Console.WriteLine("0. 나가기");
 
                 if (Program.Choice(out choice) && choice == 0)
                 { break; }
-                if (choice == 1)
-                { Equip(out choice); }
-                else
+                switch (choice)
                 {
-                    Console.WriteLine("잘못된 입력입니다");
-                    Console.ReadKey();
+                    case 1:
+                        Equip(out choice);
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다");
+                        Console.ReadKey();
+                        break;
                 }
             } while (true);
 
@@ -114,39 +121,37 @@ namespace TxtRPG1
             {
                 Console.Clear();
                 Console.WriteLine("인벤토리 - 장착관리");
-                ShowItems(true);
+                ShowItems(Mode.Equip);
                 Console.WriteLine("0. 나가기");
 
-                Program.Choice(out choice);
 
-                if (choice > 0)
+                if (Program.Choice(out choice) && choice == 0)
+                { break; }
+                if (choice <= items.Count)
                 {
-                    if (choice <= items.Count)
+                    int type = items[choice - 1].ItemType == Item.Type.armor ? 0 : 1;
+                    //장착해제
+                    if (equips[type] != null)
                     {
-                        int type = items[choice - 1].ItemType == Item.Type.armor ? 0 : 1;
-                        //장착해제
-                        if (equips[type] != null)
-                        {
-                            if (type == 0)
-                            { Def -= items[(int)equips[type]].Stat; }
-                            else
-                            { Atk -= items[(int)equips[type]].Stat; }
-
-                            if (equips[type] == choice - 1)
-                            { equips[type] = null; break; }
-                        }
-                        //장착
-                        if(type == 0)
-                        { Def += items[choice - 1].Stat; }
+                        if (type == 0)
+                        { Def -= items[(int)equips[type]].Stat; }
                         else
-                        { Atk += items[choice - 1].Stat; }
-                        equips[type] = choice - 1;
+                        { Atk -= items[(int)equips[type]].Stat; }
+
+                        if (equips[type] == choice - 1)
+                        { equips[type] = null; break; }
                     }
+                    //장착
+                    if (type == 0)
+                    { Def += items[choice - 1].Stat; }
                     else
-                    {
-                        Console.WriteLine("잘못된 입력입니다");
-                        Console.ReadKey();
-                    }
+                    { Atk += items[choice - 1].Stat; }
+                    equips[type] = choice - 1;
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다");
+                    Console.ReadKey();
                 }
             } while (choice != 0);
             return true;
