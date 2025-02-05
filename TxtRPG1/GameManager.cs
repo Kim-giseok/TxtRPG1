@@ -23,7 +23,7 @@ namespace TxtRPG1
             price = 500;
         }
 
-        public bool StartScene()
+        public void StartScene()
         {
             do
             {
@@ -66,7 +66,6 @@ namespace TxtRPG1
                         break;
                 }
             } while (true);
-            return false;
         }
 
         void DungeonEntrance(out byte choice)
