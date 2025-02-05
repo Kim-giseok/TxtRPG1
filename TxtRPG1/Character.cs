@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace TxtRPG1
 {
@@ -12,7 +13,7 @@ namespace TxtRPG1
         public int Level { get; private set; }
         public string Name { get; }
         public enum Class { 전사, 궁수, 마법사 };
-        public Class job { get; }
+        public Class Job { get; }
         public float Atk { get; private set; }
         public int Def { get; private set; }
         public int Hp { get; private set; }
@@ -28,7 +29,7 @@ namespace TxtRPG1
         {
             Name = name;
             Level = 1;
-            job = Class.전사;
+            Job = Class.전사;
             Atk = 10;
             Def = 5;
             Hp = 100;
@@ -40,6 +41,47 @@ namespace TxtRPG1
             equips = [null, null];
         }
 
+        public Character(string save, Item[] items)
+        {
+            //1. 세이브 데이터를 보유아이템 앞쪽과 뒷쪽으로 나누기
+            string[] info = save.Split("\"Items\":[{");
+            //1-1. 앞쪽에서 능력치 필드값을 추출해 필드에 넣어주기
+            string[] stats = info[0].Split(",");
+            Level = int.Parse(stats[0].Split(":")[1]);
+            Name = stats[1].Split(":")[1].Replace("\"","");
+            Job = (Class)int.Parse(stats[2].Split(":")[1]);
+            Atk = float.Parse(stats[3].Split(":")[1]);
+            Def = int.Parse(stats[4].Split(":")[1]);
+            Hp = int.Parse(stats[5].Split(":")[1]);
+            Gold = int.Parse(stats[6].Split(":")[1]);
+            Exp = int.Parse(stats[7].Split(":")[1]);
+
+            //2. 뒷쪽에서 보유 아이템들만 추출하기
+            info = info[1].Split("}],");
+            //2-1. 보유아이템들을 개체별로 분리하기
+            string[] iStrings = info[0].Split("},{");
+            //2-2. 개체의 이름값만 추출하기
+            for (int i = 0; i < iStrings.Length; i++)
+            {
+                iStrings[i] = iStrings[i].Split(",")[0].Split(":")[1].Replace("\"", "").Replace("\\u3000","　");
+                Console.WriteLine($"{iStrings[i]}");
+            }
+            //2-3. 아이템 배열에서 이름이 일치한는 아이템을 찾아서 리스트에 넣어주기
+            Items = new List<Item>();
+
+            //3. 추출하고 남은 부분에서 equips값 찾아서 넣어주기
+            weapon = (int)Item.Type.weapon;
+            armor = (int)Item.Type.armor;
+            Console.WriteLine(info[1]);
+            stats = info[1].Split("equips\":[")[1].Replace("]","").Split(",");
+
+            equips = [null, null];
+            if (stats[0] != "null")
+            { equips[0] = int.Parse(stats[0]); }
+            if (stats[1] != "null")
+            { equips[1] = int.Parse(stats[1]); }
+        }
+
         public void ShowStat(out byte choice)
         {
             do
@@ -49,7 +91,7 @@ namespace TxtRPG1
                 Console.WriteLine("캐릭터의 정보가 표시됩니다.");
                 Console.WriteLine();
                 Console.WriteLine($"Lv. {Level:D2}");
-                Console.WriteLine($"{Name} ({job})");
+                Console.WriteLine($"{Name} ({Job})");
 
                 Console.Write($"공격력 : {Atk}");
                 if (equips[weapon] != null)
