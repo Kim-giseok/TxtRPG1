@@ -17,14 +17,14 @@ namespace TxtRPG1
         public int Price { get; }
         public bool Bought { get; set; }
 
-        public Item(string name, Type type, int stat, string descript, int price, bool bought = false)
+        public Item(string name, Type type, int stat, string descript, int price)
         {
             Name = name;
             ItemType = type;
             Stat = stat;
             Descript = descript;
             Price = price;
-            Bought = bought;
+            Bought = false;
         }
 
         public override string ToString()
