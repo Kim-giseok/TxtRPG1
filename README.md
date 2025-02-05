@@ -1,4 +1,3 @@
-TxtRPG1\TxtRPG1\bin\Debug\net9.0 에 TxtRPG1.exe실행파일이 있습니다.
 게임 시작시 플레이어의 이름을 정할 수 있습니다.
 선택지를 숫자로 입력해서 진행합니다.
 
