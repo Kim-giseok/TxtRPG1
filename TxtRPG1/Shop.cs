@@ -26,6 +26,7 @@ namespace TxtRPG1
             Console.WriteLine("[보유 골드]");
             Console.WriteLine($"{Player.Gold} G");
             Console.WriteLine();
+
             //판매일 경우 플래이어가 소유중인 아이템을 보여줍니다.
             if (mode == Mode.Sell)
             { Player.ShowItems(Character.Mode.Sell); return; }
@@ -38,9 +39,9 @@ namespace TxtRPG1
                 //구매 시 선택번호 표시
                 if (mode == Mode.Buy)
                 { Console.Write($"{i + 1} "); }
-
+                //아이템 정보 표시
                 Console.Write($"{Items[i]}\t| ");
-                //가격 및 판매여부 표시
+                //가격/판매여부 표시
                 if (Items[i].Bought)
                 { Console.WriteLine("구매완료"); }
                 else

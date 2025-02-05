@@ -45,6 +45,7 @@ namespace TxtRPG1
 
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
+
                 if (Program.Choice(out choice) && choice == 0)
                 { break; }
                 Program.WrongSelectDisplay();
@@ -72,7 +73,7 @@ namespace TxtRPG1
                 Console.WriteLine($"{player.Gold} G");
 
                 Console.WriteLine();
-                if(player.Exp == 0)
+                if (player.Exp == 0)
                 { Console.WriteLine($"레벨 업! Lv.{player.Level - 1} -> Lv.{player.Level}"); }
                 else
                 { Console.WriteLine(); }
@@ -80,6 +81,7 @@ namespace TxtRPG1
 
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
+
                 if (Program.Choice(out choice) && choice == 0)
                 { break; }
                 Program.WrongSelectDisplay();

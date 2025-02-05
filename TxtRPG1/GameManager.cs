@@ -58,8 +58,9 @@ namespace TxtRPG1
                     case 5:
                         Rest(out choice);
                         break;
-                    case 6://저장하기 위해 메인문으로 잠깐 나가기
-                        return true;
+                    case 6:
+                        Program.Save(Shop, "save.json");
+                        break;
                     default:
                         Program.WrongSelectDisplay();
                         break;
@@ -76,8 +77,8 @@ namespace TxtRPG1
                 Console.WriteLine("던전입장");
                 Console.WriteLine($"이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
                 Console.WriteLine();
-                //체력이 0이면 던전에 들어가지 못하게 하기
-                if (Player.Hp <= 0)
+
+                if (Player.Hp <= 0) //체력이 0이면 던전에 들어가지 못하게 하기
                 {
                     Console.WriteLine("체력이 없어 던전에 들어갈 수 없습니다.");
                     Thread.Sleep(1000);
@@ -114,15 +115,12 @@ namespace TxtRPG1
                 switch (choice)
                 {
                     case 1:
-                        if (Player.Gold >= price)
+                        if (Player.Hp == 100)
+                        { Console.WriteLine("이미 충분히 쉬었습니다."); }
+                        else if (Player.Gold >= price)
                         {
-                            if (Player.Hp < 100)
-                            {
-                                Player.Rest(price);
-                                Console.WriteLine("휴식을 완료했습니다.");
-                            }
-                            else
-                            { Console.WriteLine("이미 충분히 쉬었습니다."); }
+                            Player.Rest(price);
+                            Console.WriteLine("휴식을 완료했습니다.");
                         }
                         else
                         { Console.WriteLine("Gold가 부족합니다."); }

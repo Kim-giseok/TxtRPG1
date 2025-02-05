@@ -25,13 +25,11 @@ namespace TxtRPG1
                 new Item("종결무기", Item.Type.weapon, 10, "종결무기입니다.", 5000)
             };
             string name;
-
+            //세이브파일 불러오기
             try
             { Load(out player, items, "save.json"); }
-            catch (Exception ex)
+            catch (Exception ex) //불러올 수 없을 때 새로 생성
             {
-                Console.WriteLine(ex.Message);
-
                 do
                 {
                     Console.Clear();
@@ -53,12 +51,7 @@ namespace TxtRPG1
 
             GameManager game = new GameManager(player, shop, dungeons);
             //게임 시작
-            while (true)
-            {
-                if (!game.StartScene())
-                { break; }
-                Save(shop, "save.json");
-            }
+            game.StartScene();
         }
 
         public static bool Choice(out byte choice)
@@ -93,7 +86,7 @@ namespace TxtRPG1
             ////아이템 복구하기 - 아이템의 판매여부 변경
             //1. 아이템 객체별로 문자열 분리
             string[] iString = objs[1].Replace("[{", "").Replace("}]", "").Split("},{");
-            //. 각 배열의 판매여부 변경
+            //2. 각 배열의 판매여부 변경
             for (int i = 0; i < iString.Length; i++)
             { items[i].Bought = (iString[i].Split(",")[5].Split(":")[1] == "true"); ; }
 

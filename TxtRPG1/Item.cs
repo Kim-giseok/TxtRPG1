@@ -12,8 +12,8 @@ namespace TxtRPG1
         public string Name { get; }
         public enum Type { armor, weapon };
         public Type ItemType { get; }
-        public int Stat { get;}
-        public string Descript { get;}
+        public int Stat { get; }
+        public string Descript { get; }
         public int Price { get; }
         public bool Bought { get; set; }
 
@@ -31,7 +31,7 @@ namespace TxtRPG1
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"{Name}");
-            for (int i= Name.Length;i<=7;i++)
+            for (int i = Name.Length; i <= 7; i++)
             { sb.Append('　'); }
             sb.Append("\t| ");
 

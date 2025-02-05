@@ -35,7 +35,9 @@ namespace TxtRPG1
             Hp = 100;
             Gold = 1500;
             Exp = 0;
+
             Items = new List<Item>();
+
             weapon = (int)Item.Type.weapon;
             armor = (int)Item.Type.armor;
             equips = [null, null];
@@ -141,7 +143,7 @@ namespace TxtRPG1
                 if ((equips[(int)item.ItemType] != null &&
                     Items[(int)equips[(int)item.ItemType]] == item))
                 { Console.Write("[E]"); }
-
+                //아이템정보 표시
                 Console.Write(item);
                 //판매시 판매가 표시
                 if (mode == Mode.Sell)
