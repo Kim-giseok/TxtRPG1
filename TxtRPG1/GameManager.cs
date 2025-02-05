@@ -13,8 +13,6 @@ namespace TxtRPG1
         public Dungeon[] Dungeons { get; }
         public int price { get; }
 
-        //public byte choice;
-
         public GameManager(Character player, Shop shop, Dungeon[] dungeons)
         {
             Player = player;

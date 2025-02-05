@@ -110,7 +110,6 @@ namespace TxtRPG1
                 else
                 { Console.WriteLine(); }
 
-
                 Console.WriteLine($"체력 : {Hp}");
                 Console.WriteLine($"Gold : {Gold} G");
                 Console.WriteLine();
