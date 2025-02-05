@@ -125,6 +125,7 @@ namespace TxtRPG1
                 try
                 {
                     Player.SellItem(choice - 1);
+                    Console.WriteLine("판매가 완료되었습니다.");
                     Thread.Sleep(500);
                 }
                 catch (ArgumentOutOfRangeException ex)
