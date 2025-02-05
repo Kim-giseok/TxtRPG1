@@ -87,7 +87,7 @@ namespace TxtRPG1
             { equips[1] = int.Parse(stats[1]); }
         }
 
-        public void ShowStat(out byte choice)
+        public void ShowStat()
         {
             do
             {
@@ -116,7 +116,7 @@ namespace TxtRPG1
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
 
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 Program.WrongSelectDisplay();
             } while (true);
@@ -153,7 +153,7 @@ namespace TxtRPG1
             Console.WriteLine();
         }
 
-        public void Inventory(out byte choice)
+        public void Inventory()
         {
             do
             {
@@ -163,12 +163,12 @@ namespace TxtRPG1
                 Console.WriteLine("1. 장착 관리");
                 Console.WriteLine("0. 나가기");
 
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 switch (choice)
                 {
                     case 1:
-                        Equip(out choice);
+                        Equip();
                         break;
                     default:
                         Program.WrongSelectDisplay();
@@ -177,7 +177,7 @@ namespace TxtRPG1
             } while (true);
         }
 
-        public void Equip(out byte choice)
+        public void Equip()
         {
             do
             {
@@ -186,7 +186,7 @@ namespace TxtRPG1
                 ShowItems(Mode.Equip);
                 Console.WriteLine("0. 나가기");
 
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 try
                 {
@@ -211,7 +211,7 @@ namespace TxtRPG1
                 }
                 catch (ArgumentOutOfRangeException ex)
                 { Program.WrongSelectDisplay(); }
-            } while (choice != 0);
+            } while (true);
         }
 
         public void BuyItem(Item item)

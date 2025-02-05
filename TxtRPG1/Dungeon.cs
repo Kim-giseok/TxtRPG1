@@ -30,7 +30,6 @@ namespace TxtRPG1
 
         void Fail(Character player)
         {
-            byte choice;
             do
             {
                 Console.Clear();
@@ -46,7 +45,7 @@ namespace TxtRPG1
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
 
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 Program.WrongSelectDisplay();
             } while (true);
@@ -54,7 +53,6 @@ namespace TxtRPG1
 
         void Clear(Character player)
         {
-            byte choice;
             do
             {
                 Console.Clear();
@@ -82,7 +80,7 @@ namespace TxtRPG1
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
 
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 Program.WrongSelectDisplay();
             } while (true);

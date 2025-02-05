@@ -13,7 +13,7 @@ namespace TxtRPG1
         public Dungeon[] Dungeons { get; }
         public int price { get; }
 
-        public byte choice;
+        //public byte choice;
 
         public GameManager(Character player, Shop shop, Dungeon[] dungeons)
         {
@@ -39,24 +39,24 @@ namespace TxtRPG1
                 Console.WriteLine("6. 저장하기");
                 Console.WriteLine("0. 종료하기");
 
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 switch (choice)
                 {
                     case 1:
-                        Player.ShowStat(out choice);
+                        Player.ShowStat();
                         break;
                     case 2:
-                        Player.Inventory(out choice);
+                        Player.Inventory();
                         break;
                     case 3:
-                        Shop.ShopEnter(out choice);
+                        Shop.ShopEnter();
                         break;
                     case 4:
-                        DungeonEntrance(out choice);
+                        DungeonEntrance();
                         break;
                     case 5:
-                        Rest(out choice);
+                        Rest();
                         break;
                     case 6:
                         Program.Save(Shop, "save.json");
@@ -68,7 +68,7 @@ namespace TxtRPG1
             } while (true);
         }
 
-        void DungeonEntrance(out byte choice)
+        void DungeonEntrance()
         {
             do
             {
@@ -81,7 +81,6 @@ namespace TxtRPG1
                 {
                     Console.WriteLine("체력이 없어 던전에 들어갈 수 없습니다.");
                     Thread.Sleep(1000);
-                    choice = 0;
                     break;
                 }
                 //던전 보여주기
@@ -89,7 +88,7 @@ namespace TxtRPG1
                 { Console.WriteLine($"{i + 1}. {Dungeons[i]}"); }
                 Console.WriteLine("0. 나가기");
 
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 try
                 { Dungeons[choice - 1].Enter(Player); }
@@ -98,7 +97,7 @@ namespace TxtRPG1
             } while (true);
         }
 
-        void Rest(out byte choice)
+        void Rest()
         {
             do
             {
@@ -109,7 +108,7 @@ namespace TxtRPG1
                 Console.WriteLine("1. 휴식하기");
                 Console.WriteLine("0. 나가기");
 
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 switch (choice)
                 {

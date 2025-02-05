@@ -50,7 +50,7 @@ namespace TxtRPG1
             Console.WriteLine();
         }
 
-        public void ShopEnter(out byte choice)
+        public void ShopEnter()
         {
             do
             {
@@ -62,15 +62,15 @@ namespace TxtRPG1
                 Console.WriteLine("2. 아이템 판매");
                 Console.WriteLine("0. 나가기");
 
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 switch (choice)
                 {
                     case 1:
-                        BuyItem(out choice);
+                        BuyItem();
                         break;
                     case 2:
-                        SellItem(out choice);
+                        SellItem();
                         break;
                     default:
                         Program.WrongSelectDisplay();
@@ -79,7 +79,7 @@ namespace TxtRPG1
             } while (true);
         }
 
-        public void BuyItem(out byte choice)
+        public void BuyItem()
         {
             do
             {
@@ -89,7 +89,7 @@ namespace TxtRPG1
                 ShowItems(Mode.Buy);
                 Console.WriteLine("0. 나가기");
 
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 try
                 {
@@ -111,7 +111,7 @@ namespace TxtRPG1
             } while (true);
         }
 
-        public void SellItem(out byte choice)
+        public void SellItem()
         {
             do
             {
@@ -121,7 +121,7 @@ namespace TxtRPG1
                 //보유골드와 자신의 아이템들을 보여줍니다.
                 ShowItems(Mode.Sell);
                 Console.WriteLine("0. 나가기");
-                if (Program.Choice(out choice) && choice == 0)
+                if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 try
                 {
