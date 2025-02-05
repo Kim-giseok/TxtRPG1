@@ -37,7 +37,7 @@ namespace TxtRPG1
                 Console.WriteLine("4. 던전입장");
                 Console.WriteLine("5. 휴식하기");
                 Console.WriteLine("6. 저장하기");
-                Console.WriteLine("0. 나가기");
+                Console.WriteLine("0. 종료하기");
 
                 if (Program.Choice(out choice) && choice == 0)
                 { break; }
