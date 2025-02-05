@@ -14,24 +14,22 @@ namespace TxtRPG1
         {
             //게임 시작 준비
             Character player;
-            Item[] items;
-            string name;
-
-            try
-            { Load(out player, out items, "save.json"); }
-            catch (Exception ex)
+            Item[] items =
             {
-                Console.WriteLine(ex.Message);
-
-                items =
-                [
                     new Item("수련자　갑옷", Item.Type.armor, 5, "수련에　도움을　주는　갑옷입니다.", 1000),
                     new Item("무쇠갑옷", Item.Type.armor, 9, "무쇠로　만들어져　튼튼한　갑옷입니다.", 2000),
                     new Item("스파르타의　갑옷", Item.Type.armor, 15, "스파르타의　전사들이　사용했다는 전설의　갑옷입니다.", 3500),
                     new Item("낡은　검", Item.Type.weapon, 2, "쉽게　볼　수　있는　낡은　검　입니다.", 600),
                     new Item("청동　도끼", Item.Type.weapon, 5, "어디선가　사용됐던거　같은　도끼입니다.", 1500),
                     new Item("스파르타의　창", Item.Type.weapon, 7, "스파르타의　전사들이　사용했다는　전설의　창입니다.", 3000)
-                ];
+            };
+            string name;
+
+            try
+            { Load(out player, items, "save.json"); }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
                 do
                 {
@@ -85,30 +83,18 @@ namespace TxtRPG1
             Thread.Sleep(500);
         }
 
-        public static void Load(out Character player, out Item[] items, string path)
+        public static void Load(out Character player, Item[] items, string path)
         {
             string jString = File.ReadAllText(path);
 
             string[] objs = jString.Split("},\"Items\":");
 
-            ////아이템 복구하기
+            ////아이템 복구하기 - 아이템의 판매여부 변경
             //1. 아이템 객체별로 문자열 분리
             string[] iString = objs[1].Replace("[{", "").Replace("}]", "").Split("},{");
-            //2. 분리된 수만큼의 아이템 배열 생성
-            items = new Item[iString.Length];
-            //3. 각 배열에 객체 생성
-            for (int i = 0; i < items.Length; i++)
-            {
-                string[] stats = iString[i].Split(",");
-                string name = stats[0].Split(":")[1].Replace("\"", "").Replace("\\u3000", "　");
-                int type = int.Parse(stats[1].Split(":")[1]);
-                int stat = int.Parse(stats[2].Split(":")[1]);
-                string descript = stats[3].Split(":")[1].Replace("\"", "").Replace("\\u3000", "　");
-                int price = int.Parse(stats[4].Split(":")[1]);
-                bool bought = (stats[5].Split(":")[1] == "true");
-
-                items[i] = new Item(name, (Item.Type)type, stat, descript, price, bought);
-            }
+            //. 각 배열의 판매여부 변경
+            for (int i = 0; i < iString.Length; i++)
+            { items[i].Bought = (iString[i].Split(",")[5].Split(":")[1] == "true"); ; }
 
             ////플레이어 복구하기
             player = new Character(objs[0].Replace("{\"Player\":{", ""), items);
