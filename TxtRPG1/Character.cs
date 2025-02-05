@@ -48,7 +48,7 @@ namespace TxtRPG1
             //1-1. 앞쪽에서 능력치 필드값을 추출해 필드에 넣어주기
             string[] stats = info[0].Split(",");
             Level = int.Parse(stats[0].Split(":")[1]);
-            Name = stats[1].Split(":")[1].Replace("\"","");
+            Name = stats[1].Split(":")[1].Replace("\"", "");
             Job = (Class)int.Parse(stats[2].Split(":")[1]);
             Atk = float.Parse(stats[3].Split(":")[1]);
             Def = int.Parse(stats[4].Split(":")[1]);
@@ -62,18 +62,22 @@ namespace TxtRPG1
             string[] iStrings = info[0].Split("},{");
             //2-2. 개체의 이름값만 추출하기
             for (int i = 0; i < iStrings.Length; i++)
-            {
-                iStrings[i] = iStrings[i].Split(",")[0].Split(":")[1].Replace("\"", "").Replace("\\u3000","　");
-                Console.WriteLine($"{iStrings[i]}");
-            }
+            { iStrings[i] = iStrings[i].Split(",")[0].Split(":")[1].Replace("\"", "").Replace("\\u3000", "　"); }
             //2-3. 아이템 배열에서 이름이 일치한는 아이템을 찾아서 리스트에 넣어주기
             Items = new List<Item>();
+            foreach (string str in iStrings)
+            {
+                foreach (var item in items)
+                {
+                    if (item.Name == str)
+                    { Items.Add(item); }
+                }
+            }
 
             //3. 추출하고 남은 부분에서 equips값 찾아서 넣어주기
             weapon = (int)Item.Type.weapon;
             armor = (int)Item.Type.armor;
-            Console.WriteLine(info[1]);
-            stats = info[1].Split("equips\":[")[1].Replace("]","").Split(",");
+            stats = info[1].Split("equips\":[")[1].Replace("]", "").Split(",");
 
             equips = [null, null];
             if (stats[0] != "null")
@@ -236,7 +240,7 @@ namespace TxtRPG1
         public void Reward(int reward)
         {
             Gold += reward;
-            Gold += reward * new Random().Next((int)Atk*10, (int)Atk*20) / 1000;
+            Gold += reward * new Random().Next((int)Atk * 10, (int)Atk * 20) / 1000;
 
             Exp++;
             if (Exp == Level)

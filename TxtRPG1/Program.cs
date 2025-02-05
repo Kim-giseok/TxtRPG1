@@ -18,10 +18,7 @@ namespace TxtRPG1
             string name;
 
             try
-            {
-                Load(out player, out items, "save.json");
-                Console.ReadKey();
-            }
+            { Load(out player, out items, "save.json"); }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
@@ -111,12 +108,6 @@ namespace TxtRPG1
                 bool bought = (stats[5].Split(":")[1] == "true");
 
                 items[i] = new Item(name, (Item.Type)type, stat, descript, price, bought);
-            }
-            foreach (var item in items)
-            {
-                Console.Write(item);
-                Console.Write(item.Price);
-                Console.WriteLine(item.Bought);
             }
 
             ////플레이어 복구하기
