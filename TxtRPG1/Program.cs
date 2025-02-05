@@ -46,7 +46,7 @@ namespace TxtRPG1
             {
                 if (!game.StartScene())
                 { break; }
-                Thread.Sleep(500);
+                Save(shop, "save.json");
             }
         }
 
@@ -60,6 +60,15 @@ namespace TxtRPG1
         public static void WrongSelectDisplay()
         {
             Console.WriteLine("잘못된 입력입니다");
+            Thread.Sleep(500);
+        }
+
+        public static void Save(Shop shop, string path)
+        {
+            string jString = JsonSerializer.Serialize(shop);
+
+            File.WriteAllText(path, jString);
+            Console.WriteLine("저장 완료");
             Thread.Sleep(500);
         }
     }

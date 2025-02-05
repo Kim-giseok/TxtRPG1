@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TxtRPG1
 {
+    [Serializable]
     internal class Shop
     {
         public Character Player { get; }
