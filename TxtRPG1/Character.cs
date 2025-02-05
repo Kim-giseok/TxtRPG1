@@ -89,7 +89,7 @@ namespace TxtRPG1
 
         public void ShowStat()
         {
-            do
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("상태 보기");
@@ -119,7 +119,7 @@ namespace TxtRPG1
                 if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 Program.WrongSelectDisplay();
-            } while (true);
+            }
         }
 
         public enum Mode { Inventory, Equip, Sell };
@@ -155,7 +155,7 @@ namespace TxtRPG1
 
         public void Inventory()
         {
-            do
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("인벤토리");
@@ -174,12 +174,12 @@ namespace TxtRPG1
                         Program.WrongSelectDisplay();
                         break;
                 }
-            } while (true);
+            }
         }
 
         public void Equip()
         {
-            do
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("인벤토리 - 장착관리");
@@ -211,7 +211,7 @@ namespace TxtRPG1
                 }
                 catch (ArgumentOutOfRangeException ex)
                 { Program.WrongSelectDisplay(); }
-            } while (true);
+            }
         }
 
         public void BuyItem(Item item)

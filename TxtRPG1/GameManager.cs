@@ -25,7 +25,7 @@ namespace TxtRPG1
 
         public void StartScene()
         {
-            do
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
@@ -65,12 +65,12 @@ namespace TxtRPG1
                         Program.WrongSelectDisplay();
                         break;
                 }
-            } while (true);
+            }
         }
 
         void DungeonEntrance()
         {
-            do
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("던전입장");
@@ -94,12 +94,12 @@ namespace TxtRPG1
                 { Dungeons[choice - 1].Enter(Player); }
                 catch (IndexOutOfRangeException ex)
                 { Program.WrongSelectDisplay(); }
-            } while (true);
+            }
         }
 
         void Rest()
         {
-            do
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("휴식하기");
@@ -128,7 +128,7 @@ namespace TxtRPG1
                         Program.WrongSelectDisplay();
                         break;
                 }
-            } while (true);
+            }
         }
     }
 }

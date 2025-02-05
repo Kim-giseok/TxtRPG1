@@ -52,7 +52,7 @@ namespace TxtRPG1
 
         public void ShopEnter()
         {
-            do
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("상점");
@@ -76,12 +76,12 @@ namespace TxtRPG1
                         Program.WrongSelectDisplay();
                         break;
                 }
-            } while (true);
+            }
         }
 
         public void BuyItem()
         {
-            do
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("상점 - 아이템 구매");
@@ -108,12 +108,12 @@ namespace TxtRPG1
                 }
                 catch (IndexOutOfRangeException ex)
                 { Program.WrongSelectDisplay(); }
-            } while (true);
+            }
         }
 
         public void SellItem()
         {
-            do
+            while (true)
             {
                 Console.Clear();
 
@@ -131,7 +131,7 @@ namespace TxtRPG1
                 }
                 catch (ArgumentOutOfRangeException ex)
                 { Program.WrongSelectDisplay(); }
-            } while (true);
+            }
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TxtRPG1
 
         void Fail(Character player)
         {
-            do
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("클리어 실패");
@@ -48,12 +48,12 @@ namespace TxtRPG1
                 if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 Program.WrongSelectDisplay();
-            } while (true);
+            }
         }
 
         void Clear(Character player)
         {
-            do
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("던전 클리어");
@@ -83,7 +83,7 @@ namespace TxtRPG1
                 if (Program.Choice(out byte choice) && choice == 0)
                 { break; }
                 Program.WrongSelectDisplay();
-            } while (true);
+            }
         }
 
         public override string ToString()
