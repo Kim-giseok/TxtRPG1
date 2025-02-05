@@ -63,7 +63,7 @@ namespace TxtRPG1
             //2-2. 개체의 이름값만 추출하기
             for (int i = 0; i < iStrings.Length; i++)
             { iStrings[i] = iStrings[i].Split(",")[0].Split(":")[1].Replace("\"", "").Replace("\\u3000", "　"); }
-            //2-3. 아이템 배열에서 이름이 일치한는 아이템을 찾아서 리스트에 넣어주기
+            //2-3. 아이템 배열에서 이름이 일치하는 아이템을 찾아서 리스트에 넣어주기
             Items = new List<Item>();
             foreach (string str in iStrings)
             {

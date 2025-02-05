@@ -92,11 +92,11 @@ namespace TxtRPG1
             string[] objs = jString.Split("},\"Items\":");
 
             ////아이템 복구하기
-            //1.아이템 객체별로 문자열 분리
+            //1. 아이템 객체별로 문자열 분리
             string[] iString = objs[1].Replace("[{", "").Replace("}]", "").Split("},{");
-            //2.분리된 수만큼의 아이템 배열 생성
+            //2. 분리된 수만큼의 아이템 배열 생성
             items = new Item[iString.Length];
-            //3.각 배열에 객체 생성
+            //3. 각 배열에 객체 생성
             for (int i = 0; i < items.Length; i++)
             {
                 string[] stats = iString[i].Split(",");
